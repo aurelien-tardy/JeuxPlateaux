@@ -5,10 +5,28 @@
  */
 package vue;
 
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.stage.Stage;
+import modele.Grille;
+
 /**
  *
  * @author Epulapp
  */
-public class VueControleur {
+public class VueControleur extends Application{
     
+    Grille grille;
+    
+    @Override
+    public void start(Stage primaryStage) {
+        
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
