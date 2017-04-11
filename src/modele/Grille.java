@@ -26,6 +26,22 @@ public class Grille {
     public Case[][] getCases(){
         return _cases;
     }
+
+    public int getLargeur() {
+        return _largeur;
+    }
+
+    public void setLargeur(int _largeur) {
+        this._largeur = _largeur;
+    }
+
+    public int getHauteur() {
+        return _hauteur;
+    }
+
+    public void setHauteur(int _hauteur) {
+        this._hauteur = _hauteur;
+    }
     
     
  
