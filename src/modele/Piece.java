@@ -11,10 +11,40 @@ package modele;
  */
 public class Piece {
     private Case[][] _cases;
-    int _posX,_posY;
+    private int _posX,_posY;
+    private int _typePiece;
     
+    public Piece(int posX, int posY, int typePiece){
+        _posX = posX;
+        _posX = posY;
+        _typePiece = typePiece;
+        switch(typePiece){
+            case 0:
+                _cases = new Case[4][4];
+                for(int i=0;i<4;i++){
+                    for(int j=0;j<4;j++){
+                        _cases[i][j] = new Case();
+                    }
+                }
+                break;
+        }
+    }
+
+    public int getPosX() {
+        return _posX;
+    }
+
+    public int getPosY() {
+        return _posY;
+    }
+
+    public int getTypePiece() {
+        return _typePiece;
+    }
     
-    
+    public Case[][] getCases(){
+        return _cases;
+    }
     
     public Boolean translation(Translation direction){
         boolean ok = false;
@@ -32,7 +62,6 @@ public class Piece {
                 _posY++;
                 break;
         }
-        
         return ok;
     }
 }

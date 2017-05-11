@@ -5,11 +5,13 @@
  */
 package modele;
 
+import java.util.Observable;
+
 /**
  *
  * @author Epulapp
  */
-public class Plateau {
+public class Plateau{
     private Grille _grille;
 
     public Plateau(int largeur, int hauteur){
