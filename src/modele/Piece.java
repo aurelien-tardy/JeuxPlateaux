@@ -16,13 +16,13 @@ public class Piece {
     
     public Piece(int posX, int posY, int typePiece){
         _posX = posX;
-        _posX = posY;
+        _posY = posY;
         _typePiece = typePiece;
         switch(typePiece){
             case 0:
-                _cases = new Case[4][4];
-                for(int i=0;i<4;i++){
-                    for(int j=0;j<4;j++){
+                _cases = new Case[2][2];
+                for(int i=0;i<2;i++){
+                    for(int j=0;j<2;j++){
                         _cases[i][j] = new Case();
                     }
                 }

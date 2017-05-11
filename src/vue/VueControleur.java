@@ -37,22 +37,20 @@ public class VueControleur extends Application {
         GridPane gPane = new GridPane();
         int size = 20;
         plateau = new Plateau(16, 12);
-        Rectangle[][] rectangles = new Rectangle[12][16];
-        Piece piece = new Piece(5, 7, 0);
+        Piece piece = new Piece(7, 6, 0);
+        Piece piece_old = piece;
         BorderPane border = new BorderPane();
 
         for (int i = 0; i < plateau.getGrille().getHauteur(); i++) {
             for (int j = 0; j < plateau.getGrille().getLargeur(); j++) {
-                rectangles[i][j] = new Rectangle(size, size, Color.GREY);
-                gPane.add(rectangles[i][j], i, j);
+                gPane.add(new Rectangle(size, size, Color.GREY), i, j);
             }
         }
 
         for (int i = 0; i < piece.getCases().length; i++) {
             for (int j = 0; j < piece.getCases()[i].length; j++) {
                 if (piece.getCases()[i][j] != null) {
-                    rectangles[i][j] = new Rectangle(size, size, Color.YELLOW);
-                    gPane.add(rectangles[i][j], i + piece.getPosX(), j + piece.getPosY());
+                    gPane.add(new Rectangle(size, size, Color.YELLOW), i + piece.getPosX(), j + piece.getPosY());
                 }
             }
         }
@@ -60,23 +58,9 @@ public class VueControleur extends Application {
         plateau.getGrille().addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
-
-                for (int i = 0; i < plateau.getGrille().getHauteur(); i++) {
-                    for (int j = 0; j < plateau.getGrille().getLargeur(); j++) {
-                        if (i == piece.getPosX() && j == piece.getPosY()) {
-                            if (piece.getCases()[i][j] != null) {
-                                for (int k = 0; k < piece.getCases().length; k++) {
-                                    for (int l = 0; l < piece.getCases()[k].length; l++) {
-                                        if (piece.getCases()[k][l] != null) {
-                                            rectangles[k + i][l + j] = new Rectangle(size, size, Color.YELLOW);
-                                        }
-                                    }
-                                }
-
-                            }
-                        } else {
-                            rectangles[i][j] = new Rectangle(size, size, Color.GREY);
-                        }
+                for (int i = 0; i < piece.getCases().length; i++) {
+                    for (int j = 0; j < piece.getCases()[i].length; j++) {
+                        ((Rectangle) gPane.getChildren().get(i * j)).setFill(Color.YELLOW);
                     }
                 }
             }
@@ -92,6 +76,7 @@ public class VueControleur extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        piece_old = piece;
         piece.translation(Translation.Bas);
         try {
             Thread.sleep(1000);
