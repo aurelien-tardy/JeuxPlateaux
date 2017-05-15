@@ -3,35 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modele;
-
-import java.util.Observable;
+package grille.modele;
 
 
 /**
  *
  * @author Epulapp
  */
-public class Grille extends Observable{
+public class Grille {
+
     private Case[][] _cases;
-    int _largeur,_hauteur;
-    
-    
-    public Grille(){}
-    public Grille(int largeur,int hauteur){
+    int _largeur, _hauteur;
+
+    public Grille() {
+    }
+
+    public Grille(int largeur, int hauteur) {
         _largeur = largeur;
         _hauteur = hauteur;
         _cases = new Case[_hauteur][_largeur];
-        for(int i=0;i<_largeur;i++) _cases[_hauteur-1][i] = new Case();
-        
+
     }
-    
-    public void MAJ() {
-        setChanged();
-        notifyObservers();
+
+    public Boolean setCases(int i, int j, Case c) {
+        if (i > 0 && i < _largeur && j > 0 && j < _hauteur) {
+            this._cases[i][j] = c;
+            return true;
+        }
+        return false;
     }
-    
-    public Case[][] getCases(){
+
+    public Case[][] getCases() {
         return _cases;
     }
 
@@ -50,7 +52,5 @@ public class Grille extends Observable{
     public void setHauteur(int _hauteur) {
         this._hauteur = _hauteur;
     }
-    
-    
- 
+
 }

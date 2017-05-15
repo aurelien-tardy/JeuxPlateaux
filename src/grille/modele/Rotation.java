@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modele;
+package grille.modele;
 
 /**
  *
  * @author Epulapp
  */
-public class Case {
-    
+public enum Rotation {
+    Gauche,
+    Droite
 }
