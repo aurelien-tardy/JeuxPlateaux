@@ -22,7 +22,7 @@ public class FormePiece {
             case 0:
                 cases = new Case[1][4];
                 for (int i = 0; i < 4; i++) {
-                    cases[0][i] = new Case(Color.AZURE);
+                    cases[0][i] = new Case(Color.CYAN);
                 }
                 break;
 

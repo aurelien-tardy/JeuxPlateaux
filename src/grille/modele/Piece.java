@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
  *
  * @author Epulapp
  */
-public class Piece extends Observable {
+public class Piece {
 
     private Case[][] _cases;
     private int _posX, _posY;
