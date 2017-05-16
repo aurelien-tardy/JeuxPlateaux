@@ -39,8 +39,7 @@ public class Plateau extends Observable {
         this.piece = piece;
     }
 
-    public Boolean deplacerPiece(Translation translation) {
-        Piece new_piece = this.piece.clone();
+    private Boolean checkPosition(Piece new_piece) {
         for (int i = new_piece.getPosX(); i < new_piece.getPosX() + new_piece.getCases().length; i++) {
             for (int j = new_piece.getPosY(); j < new_piece.getPosY() + new_piece.getCases()[i - new_piece.getPosX()].length; j++) {
                 //si la case n'est pas hros grille
@@ -57,36 +56,33 @@ public class Plateau extends Observable {
                 }
             }
         }
-        piece.translation(translation);
-        this.setChanged();
-        this.notifyObservers();
         return true;
     }
 
-    public Boolean deplacerPiece(Rotation rotation) {
+    public Boolean deplacerPiece(Translation translation) {
         Piece new_piece = this.piece.clone();
-        for (int i = new_piece.getPosX(); i < new_piece.getPosX() + new_piece.getCases().length; i++) {
-            for (int j = new_piece.getPosY(); j < new_piece.getPosY() + new_piece.getCases()[i - new_piece.getPosX()].length; j++) {
-                //si la case n'est pas hros grille
-                if (i < this.grille.getLargeur() && j < this.grille.getHauteur()) {
-                    //si la case de la piece est une case instancié (donc est un bout de la forme de la piece)
-                    if (new_piece.getCases()[i - new_piece.getPosX()][j - new_piece.getPosY()].getColor() != null) {
-                        //si la case de la grille au même enplacement est vide alors on peux continuer
-                        if (this.grille.getCases()[i][j] != null) {
-                            return false;
-                        }
-                    }
-                } else {
-                    return false;
-                }
-            }
+        new_piece.translation(translation);
+        if (checkPosition(new_piece)) {
+            piece.translation(translation);
+            this.setChanged();
+            this.notifyObservers();
+            return true;
         }
-        //piece.rotation(rotation);
-        this.setChanged();
-        this.notifyObservers();
-        return true;
+        return false;
     }
-    
+
+    public Boolean tournerPiece(Rotation rotation) {
+        Piece new_piece = this.piece.clone();
+        new_piece.rotation(rotation);
+        if (checkPosition(new_piece)) {
+            piece.rotation(rotation);
+            this.setChanged();
+            this.notifyObservers();
+            return true;
+        }
+        return false;
+    }
+
     public Boolean placerPiece() {
         for (int i = 0; i < piece.getCases().length; i++) {
             for (int j = 0; j < piece.getCases()[i].length; j++) {
