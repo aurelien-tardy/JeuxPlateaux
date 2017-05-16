@@ -20,7 +20,7 @@ public class PlateauTetris extends Observable implements Runnable{
     private Plateau plateau;
 
     public PlateauTetris() {
-        plateau = new Plateau(16, 16);
+        plateau = new Plateau(16, 12);
     }
 
     public Plateau getPlateau() {

@@ -32,8 +32,8 @@ public class VueControleur extends GridPane implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         // on vide la grille
-        for (int i = 0; i < _plateau.getGrille().getLargeur(); i++) {
-            for (int j = 0; j < _plateau.getGrille().getHauteur(); j++) {
+        for (int i = 0; i < _plateau.getGrille().getHauteur(); i++) {
+            for (int j = 0; j < _plateau.getGrille().getLargeur(); j++) {
                 if (Rectangle.class.isAssignableFrom(this.getChildren().get(i * _plateau.getGrille().getLargeur() + j).getClass())) {
                     ((Rectangle) this.getChildren().get(i * _plateau.getGrille().getLargeur() + j)).setFill(Color.GREY);
                 }
@@ -41,8 +41,8 @@ public class VueControleur extends GridPane implements Observer {
         }
 
         //on dessine la grille                
-        for (int i = 0; i < _plateau.getGrille().getLargeur(); i++) {
-            for (int j = 0; j < _plateau.getGrille().getHauteur(); j++) {
+        for (int i = 0; i < _plateau.getGrille().getHauteur(); i++) {
+            for (int j = 0; j < _plateau.getGrille().getLargeur(); j++) {
                 if (_plateau.getGrille().getCases()[i][j] != null) {
                     ((Rectangle) this.getChildren().get(i * _plateau.getGrille().getLargeur() + j)).setFill(_plateau.getGrille().getCases()[i][j].getColor());
                 }

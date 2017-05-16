@@ -17,41 +17,70 @@ public class FormePiece {
 
     public static Piece getPieceAleatoire() {
         Case[][] cases = null;
-        int randInt = (int) (Math.random() * 2);
+        int randInt = (int) (Math.random() * 7);
         switch (randInt) {
+            // Brick I
             case 0:
                 cases = new Case[1][4];
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 1; i++) {
                     cases[0][i] = new Case(Color.CYAN);
                 }
                 break;
 
-            //
+            // Brick O
             case 1:
-                cases = new Case[2][3];
-                cases[0][0] = new Case(Color.RED);
-                cases[0][1] = new Case(Color.RED);
-                cases[1][1] = new Case(Color.RED);
-                cases[1][2] = new Case(Color.RED);
-                break;
-                
-            case 2:
-                
-                break;
-                
-            case 3:
-                
+                cases = new Case[2][2];
+                cases[0][0] = new Case(Color.YELLOW);
+                cases[0][1] = new Case(Color.YELLOW);
+                cases[1][0] = new Case(Color.YELLOW);
+                cases[1][1] = new Case(Color.YELLOW);
                 break;
 
-            default:
-                cases = new Case[2][2];
+            // Brick T
+            case 2:
+                cases = new Case[2][3];
+                cases[0][1] = new Case(Color.PURPLE);
+                cases[1][0] = new Case(Color.PURPLE);
+                cases[1][1] = new Case(Color.PURPLE);
+                cases[2][0] = new Case(Color.PURPLE);
+                break;
+
+            // Brick S
+            case 3:
+                cases = new Case[2][3];
+                cases[0][1] = new Case(Color.GREEN);
+                cases[1][0] = new Case(Color.GREEN);
+                cases[1][1] = new Case(Color.GREEN);
+                cases[2][0] = new Case(Color.GREEN);
+                break;
+
+            // Brick Z
+            case 4:
+                cases = new Case[2][3];
                 cases[0][0] = new Case(Color.RED);
+                cases[1][0] = new Case(Color.RED);
+                cases[1][1] = new Case(Color.RED);
+                cases[2][1] = new Case(Color.RED);
+                break;
+                
+            // Brick J
+            case 5:
+                cases = new Case[2][3];
+                cases[0][0] = new Case(Color.BLUE);
+                cases[0][1] = new Case(Color.BLUE);
+                cases[1][1] = new Case(Color.BLUE);
+                cases[2][1] = new Case(Color.BLUE);
+                break;
+             
+            // Brick L
+            case 6:
+                cases = new Case[2][3];
                 cases[0][1] = new Case(Color.RED);
                 cases[1][1] = new Case(Color.RED);
-                cases[1][2] = new Case(Color.RED);
-                break;
+                cases[2][0] = new Case(Color.RED);
+                cases[2][1] = new Case(Color.RED);
         }
-        
+
         return new Piece(4, 0, cases);
     }
 }
