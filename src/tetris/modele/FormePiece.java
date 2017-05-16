@@ -21,8 +21,8 @@ public class FormePiece {
         switch (randInt) {
             case 0:
                 cases = new Case[1][4];
-                for (int i = 0; i < 1; i++) {
-                    cases[0][1] = new Case(Color.AZURE);
+                for (int i = 0; i < 4; i++) {
+                    cases[0][i] = new Case(Color.AZURE);
                 }
                 break;
 

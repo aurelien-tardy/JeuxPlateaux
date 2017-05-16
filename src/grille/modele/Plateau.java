@@ -42,7 +42,7 @@ public class Plateau extends Observable {
                 //si la case n'est pas hros grille
                 if (i < this.grille.getLargeur() && j < this.grille.getHauteur()) {
                     //si la case de la piece est une case instancié (donc est un bout de la forme de la piece)
-                    if (new_piece.getCases()[i - new_piece.getPosX()][j - new_piece.getPosY()].getColor() != null) {
+                    if (new_piece.getCases()[i - new_piece.getPosX()][j - new_piece.getPosY()] != null) {
                         //si la case de la grille au même enplacement est vide alors on peux continuer
                         if (this.grille.getCases()[i][j] != null) {
                             return false;

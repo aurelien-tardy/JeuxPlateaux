@@ -23,7 +23,6 @@ import static javafx.application.Application.launch;
 public class VueControleur extends GridPane implements Observer {
 
     private Plateau _plateau;
-    private BorderPane _border;
     private int _size;
     private static VueControleur instance;
 
@@ -62,16 +61,13 @@ public class VueControleur extends GridPane implements Observer {
     private void initialize(Plateau plateau) {
         _plateau = plateau;
         _size = 20;
-        _plateau.setGrille(new Grille(16, 12));
         Case[][] cases = new Case[3][3];
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
                 cases[i][j] = new Case(Color.YELLOW);
             }
         }
-
-        _border = new BorderPane();
-
+        
         for (int i = 0; i < _plateau.getGrille().getHauteur(); i++) {
             for (int j = 0; j < _plateau.getGrille().getLargeur(); j++) {
                 this.add(new Rectangle(_size, _size, Color.GREY), i, j);
