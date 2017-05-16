@@ -26,6 +26,7 @@ public class FormePiece {
                 }
                 break;
 
+            //
             case 1:
                 cases = new Case[2][3];
                 cases[0][0] = new Case(Color.RED);
@@ -33,9 +34,17 @@ public class FormePiece {
                 cases[1][1] = new Case(Color.RED);
                 cases[1][2] = new Case(Color.RED);
                 break;
+                
+            case 2:
+                
+                break;
+                
+            case 3:
+                
+                break;
 
             default:
-                cases = new Case[2][3];
+                cases = new Case[2][2];
                 cases[0][0] = new Case(Color.RED);
                 cases[0][1] = new Case(Color.RED);
                 cases[1][1] = new Case(Color.RED);

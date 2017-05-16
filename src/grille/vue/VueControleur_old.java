@@ -88,6 +88,7 @@ public class VueControleur_old extends Application {
         piece = new Piece(3, 6, cases);
         
         piece.rotation(Rotation.Gauche);
+        piece.translation(Translation.Droite);
         
         border = new BorderPane();
 
