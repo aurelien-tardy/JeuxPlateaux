@@ -5,10 +5,7 @@
  */
 package grille.modele;
 
-import grille.modele.Grille;
-import grille.modele.Piece;
 import java.util.Observable;
-import javafx.scene.paint.Color;
 
 /**
  *
