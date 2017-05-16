@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import grille.modele.Piece;
+import grille.modele.Rotation;
 import grille.modele.Translation;
 import javafx.scene.Group;
 import static javafx.application.Application.launch;
@@ -76,13 +77,18 @@ public class VueControleur_old extends Application {
         gPane = new GridPane();
         int size = 20;
         grille = new Grille(16, 12);
-        Case[][] cases = new Case[3][3];
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
+        Case[][] cases = new Case[2][3];
+       for (int i = 0; i <2; i++) {
+            for (int j = 0; j < 3; j++) {
                 cases[i][j] = new Case(Color.YELLOW);
             }
         }
+       cases[0][1]=null;
+       cases[0][2]=null;
         piece = new Piece(3, 6, cases);
+        
+        piece.rotation(Rotation.Gauche);
+        
         border = new BorderPane();
 
         for (int i = 0; i < grille.getHauteur(); i++) {

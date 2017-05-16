@@ -22,7 +22,7 @@ public class Piece extends Observable {
         _posY = posY;
         _cases = cases;
     }
-    
+
     public Boolean translation(Translation direction) {
         boolean ok = false;
         switch (direction) {
@@ -40,6 +40,29 @@ public class Piece extends Observable {
                 break;
         }
         return ok;
+    }
+
+    public Boolean rotation(Rotation rotation) {
+
+        int taille1 = _cases.length;
+        int taille2 = _cases[0].length;
+
+        Case[][] newCases = new Case[taille2][taille1];
+
+        for (int i = 0; i < taille2; i++) {
+            int k = 0;
+            for (int j = 0; j < taille1; j++) {
+                if (rotation == Rotation.Droite) {
+                    newCases[i][j] = _cases[j][taille2 - k++ - 1];
+                } else {
+                    newCases[i][j] = _cases[taille1 - k++ - 1][i];
+                }
+            }
+        }
+
+        _cases = newCases;
+        return true;
+
     }
 
     public Case[][] getCases() {
