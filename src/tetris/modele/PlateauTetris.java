@@ -5,7 +5,6 @@
  */
 package tetris.modele;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import grille.modele.Case;
 import grille.modele.Grille;
 import grille.modele.Plateau;
@@ -48,11 +47,12 @@ public class PlateauTetris extends Observable implements Runnable {
         this.point = point;
     }
 
-    public void detruireLigne() {
+    public synchronized int detruireLigne() {
+        int nbLigne;
         final int hauteur = plateau.getGrille().getHauteur();
         final int largeur = plateau.getGrille().getLargeur();
         Case[][] cases = new Case[hauteur][largeur];
-        int incremente = 0;
+        int retard = 0;
         Boolean destroy;
         List<Integer> lineNumber = new ArrayList<Integer>();
 
@@ -68,19 +68,19 @@ public class PlateauTetris extends Observable implements Runnable {
                 lineNumber.add(j);
             }
         }
-
+        nbLigne = lineNumber.size();
         for (int j = largeur - 1; j >= 0; j--) {
-            if (j - incremente >= 0) {
-                if (lineNumber.size() > 0 && j == lineNumber.get(lineNumber.size() - 1)) {
-                    incremente++;
-                    lineNumber.remove(lineNumber.size() - 1);
-                }
-                for (int i = 0; i < hauteur; i++) {
-                    cases[i][j] = plateau.getGrille().getCases()[i][j - incremente];
-                }
+            if (lineNumber.size() > 0 && j == lineNumber.get(lineNumber.size() - 1)) {
+                j--;
+                retard++;
+                lineNumber.remove(lineNumber.size() - 1);
+            }
+            for (int i = 0; i < hauteur; i++) {
+                cases[i][j + retard] = plateau.getGrille().getCases()[i][j];
             }
         }
         plateau.setGrille(new Grille(largeur, hauteur, cases));
+        return nbLigne;
     }
 
     public Boolean isGameOver() {
@@ -100,7 +100,7 @@ public class PlateauTetris extends Observable implements Runnable {
                 Thread.sleep(1000);
                 if (!plateau.deplacerPiece(Translation.Bas)) {
                     plateau.placerPiece();
-                    detruireLigne();
+                    while (detruireLigne() > 0);
                     if (isGameOver()) {
                         break;
                     }
