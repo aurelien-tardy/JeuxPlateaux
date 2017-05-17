@@ -5,7 +5,6 @@
  */
 package grille.modele;
 
-
 /**
  *
  * @author Epulapp
@@ -23,6 +22,16 @@ public class Grille {
         _hauteur = hauteur;
         _cases = new Case[_hauteur][_largeur];
 
+    }
+
+    public Grille(int largeur, int hauteur, Case[][] cases) {
+        _largeur = largeur;
+        _hauteur = hauteur;
+        _cases = cases;
+    }
+
+    public void setCases(Case[][] cases) {
+        this._cases = cases;
     }
 
     public Boolean setCases(int i, int j, Case c) {

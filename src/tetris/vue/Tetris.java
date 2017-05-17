@@ -54,6 +54,7 @@ public class Tetris extends Application implements Observer {
                         case DOWN:
                             if (!plateauTetris.getPlateau().deplacerPiece(Translation.Bas)) {
                                 plateauTetris.getPlateau().placerPiece();
+                                plateauTetris.detruireLigne();
                                 if (plateauTetris.isGameOver()) {
                                     break;
                                 }
@@ -73,6 +74,7 @@ public class Tetris extends Application implements Observer {
                             while (plateauTetris.getPlateau().deplacerPiece(Translation.Bas)) {
                             }
                             plateauTetris.getPlateau().placerPiece();
+                            plateauTetris.detruireLigne();
                             if (plateauTetris.isGameOver()) {
                                 break;
                             }
