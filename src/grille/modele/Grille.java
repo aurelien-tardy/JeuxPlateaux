@@ -26,7 +26,7 @@ public class Grille {
     }
 
     public Boolean setCases(int i, int j, Case c) {
-        if (i > 0 && i < _largeur && j > 0 && j < _hauteur) {
+        if (i >= 0 && i < _hauteur && j >= 0 && j < _largeur) {
             this._cases[i][j] = c;
             return true;
         }

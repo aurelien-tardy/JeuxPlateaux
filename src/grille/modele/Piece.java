@@ -5,9 +5,6 @@
  */
 package grille.modele;
 
-import java.util.Observable;
-import javafx.scene.paint.Color;
-
 /**
  *
  * @author Epulapp

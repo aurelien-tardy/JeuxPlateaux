@@ -22,7 +22,7 @@ public class FormePiece {
             // Brick I
             case 0:
                 cases = new Case[1][4];
-                for (int i = 0; i < 1; i++) {
+                for (int i = 0; i < 4; i++) {
                     cases[0][i] = new Case(Color.CYAN);
                 }
                 break;
@@ -38,7 +38,7 @@ public class FormePiece {
 
             // Brick T
             case 2:
-                cases = new Case[2][3];
+                cases = new Case[3][2];
                 cases[0][1] = new Case(Color.PURPLE);
                 cases[1][0] = new Case(Color.PURPLE);
                 cases[1][1] = new Case(Color.PURPLE);
@@ -47,7 +47,7 @@ public class FormePiece {
 
             // Brick S
             case 3:
-                cases = new Case[2][3];
+                cases = new Case[3][2];
                 cases[0][1] = new Case(Color.GREEN);
                 cases[1][0] = new Case(Color.GREEN);
                 cases[1][1] = new Case(Color.GREEN);
@@ -56,7 +56,7 @@ public class FormePiece {
 
             // Brick Z
             case 4:
-                cases = new Case[2][3];
+                cases = new Case[3][2];
                 cases[0][0] = new Case(Color.RED);
                 cases[1][0] = new Case(Color.RED);
                 cases[1][1] = new Case(Color.RED);
@@ -65,7 +65,7 @@ public class FormePiece {
                 
             // Brick J
             case 5:
-                cases = new Case[2][3];
+                cases = new Case[3][2];
                 cases[0][0] = new Case(Color.BLUE);
                 cases[0][1] = new Case(Color.BLUE);
                 cases[1][1] = new Case(Color.BLUE);
@@ -74,7 +74,7 @@ public class FormePiece {
              
             // Brick L
             case 6:
-                cases = new Case[2][3];
+                cases = new Case[3][2];
                 cases[0][1] = new Case(Color.RED);
                 cases[1][1] = new Case(Color.RED);
                 cases[2][0] = new Case(Color.RED);

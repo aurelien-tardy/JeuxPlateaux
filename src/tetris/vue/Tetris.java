@@ -30,6 +30,12 @@ public class Tetris extends Application implements Observer {
     private VueControleur vueGrille;
 
     @Override
+    public void stop() throws Exception {
+        super.stop(); //To change body of generated methods, choose Tools | Templates.
+        PlateauTetris.GAMEOVER = true;
+    }
+
+    @Override
     public void start(Stage primaryStage) throws Exception {
         plateauTetris = new PlateauTetris();
         BorderPane border = new BorderPane();
@@ -38,42 +44,49 @@ public class Tetris extends Application implements Observer {
         plateauTetris.getPlateau().addObserver(vueGrille);
         border.setCenter(vueGrille);
         Scene scene = new Scene(border, Color.GREY);
-        
+
         //controleur
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case DOWN:
-                        if (!plateauTetris.getPlateau().deplacerPiece(Translation.Bas)) {
+                if (!PlateauTetris.GAMEOVER) {
+                    switch (event.getCode()) {
+                        case DOWN:
+                            if (!plateauTetris.getPlateau().deplacerPiece(Translation.Bas)) {
+                                plateauTetris.getPlateau().placerPiece();
+                                if (plateauTetris.isGameOver()) {
+                                    break;
+                                }
+                                plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
+                            }
+                            break;
+
+                        case RIGHT:
+                            plateauTetris.getPlateau().deplacerPiece(Translation.Droite);
+                            break;
+
+                        case LEFT:
+                            plateauTetris.getPlateau().deplacerPiece(Translation.Gauche);
+                            break;
+
+                        case ENTER:
+                            while (plateauTetris.getPlateau().deplacerPiece(Translation.Bas)) {
+                            }
                             plateauTetris.getPlateau().placerPiece();
+                            if (plateauTetris.isGameOver()) {
+                                break;
+                            }
                             plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
-                        }
-                        break;
-                        
-                    case RIGHT:
-                        plateauTetris.getPlateau().deplacerPiece(Translation.Droite);
-                        break;
+                            break;
 
-                    case LEFT:
-                        plateauTetris.getPlateau().deplacerPiece(Translation.Gauche);
-                        break;
-
-                        
-                    case ENTER:
-                        while(plateauTetris.getPlateau().tournerPiece(Rotation.Droite)){
-                            plateauTetris.getPlateau().placerPiece();
-                        }
-                        plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
-                        break;
-                        
-                    case O:
-                        plateauTetris.getPlateau().tournerPiece(Rotation.Gauche);
-                        break;
+                        case O:
+                            plateauTetris.getPlateau().tournerPiece(Rotation.Gauche);
+                            break;
+                    }
                 }
             }
         });
-        
+
         primaryStage.setTitle("Tetris");
         primaryStage.setScene(scene);
         primaryStage.show();

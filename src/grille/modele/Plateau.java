@@ -40,7 +40,7 @@ public class Plateau extends Observable {
         for (int i = new_piece.getPosX(); i < new_piece.getPosX() + new_piece.getCases().length; i++) {
             for (int j = new_piece.getPosY(); j < new_piece.getPosY() + new_piece.getCases()[i - new_piece.getPosX()].length; j++) {
                 //si la case n'est pas hros grille
-                if (i < this.grille.getLargeur() && j < this.grille.getHauteur()) {
+                if (i < this.grille.getHauteur() && j < this.grille.getLargeur() && i>=0 && j>=0) {
                     //si la case de la piece est une case instancié (donc est un bout de la forme de la piece)
                     if (new_piece.getCases()[i - new_piece.getPosX()][j - new_piece.getPosY()] != null) {
                         //si la case de la grille au même enplacement est vide alors on peux continuer
@@ -84,7 +84,7 @@ public class Plateau extends Observable {
         for (int i = 0; i < piece.getCases().length; i++) {
             for (int j = 0; j < piece.getCases()[i].length; j++) {
                 if (piece.getCases()[i][j] != null) {
-                    if (!grille.setCases(i, j, piece.getCases()[i + piece.getPosX()][j + piece.getPosY()])) {
+                    if (!grille.setCases(i + piece.getPosX(), j + piece.getPosY(), piece.getCases()[i][j])) {
                         return false;
                     }
                 }
@@ -95,10 +95,14 @@ public class Plateau extends Observable {
 
     public void creerNouvellePiece(int posX, int posY, Case[][] cases){
         piece = new Piece(posX, posY, cases);
+        setChanged();
+        notifyObservers();
     }
     
     public void creerNouvellePiece(Piece piece){
         this.piece = piece;
+        setChanged();
+        notifyObservers();
     }
     
     public Boolean supprimerLigne(int ligne) {

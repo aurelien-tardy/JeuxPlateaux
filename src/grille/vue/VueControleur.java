@@ -25,7 +25,7 @@ public class VueControleur extends GridPane implements Observer {
     private int _size;
     private static VueControleur instance;
 
-    public VueControleur(Plateau plateau) {
+    private VueControleur(Plateau plateau) {
         initialize(plateau);
     }
 
@@ -86,12 +86,5 @@ public class VueControleur extends GridPane implements Observer {
             instance = new VueControleur(plateau);
         }
         return instance;
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 }
