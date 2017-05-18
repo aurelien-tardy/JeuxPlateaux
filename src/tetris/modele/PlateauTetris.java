@@ -31,7 +31,7 @@ public class PlateauTetris extends Observable implements Runnable {
     public PlateauTetris() {
         GAMEOVER = false;
         score = new SimpleIntegerProperty(0);
-        plateau = new Plateau(30, 10);
+        plateau = new Plateau(20, 10);
         (new Thread(this)).start();
     }
 
@@ -61,6 +61,13 @@ public class PlateauTetris extends Observable implements Runnable {
 
     public void setPoint(int point) {
         this.point = point;
+    }
+
+    public void restart() {
+        plateau.setPiece(FormePiece.getPieceAleatoire());
+        plateau.setGrille(new Grille(plateau.getGrille().getLargeur(), plateau.getGrille().getHauteur()));
+        score.set(0);
+        PlateauTetris.GAMEOVER = false;
     }
 
     public synchronized int detruireLigne() {
@@ -129,7 +136,6 @@ public class PlateauTetris extends Observable implements Runnable {
                 Logger.getLogger(PlateauTetris.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
-
         }
     }
 }

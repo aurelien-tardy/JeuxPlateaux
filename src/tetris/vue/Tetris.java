@@ -14,14 +14,15 @@ import grille.modele.Rotation;
 import grille.vue.VueControleur;
 import java.util.Observer;
 import javafx.beans.property.IntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.converter.NumberStringConverter;
 import tetris.modele.PlateauTetris;
 
 /**
@@ -43,9 +44,17 @@ public class Tetris extends Application implements Observer {
     @Override
     public void start(Stage primaryStage) throws Exception {
         plateauTetris = new PlateauTetris();
-
-        scoreValue = new Text("test");
+        scoreValue = new Text("0");
         scoreValue.setFont(new Font(50));
+        BorderPane border_buttons = new BorderPane();
+        Button b_restart = new Button("Retart");
+        b_restart.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                plateauTetris.restart();
+            }
+        });
+        border_buttons.setCenter(b_restart);
 
         //scoreValue.textProperty().bindBidirectional(plateauTetris.getScore(), new NumberStringConverter());
         bindScore(plateauTetris.getScore());
@@ -54,9 +63,10 @@ public class Tetris extends Application implements Observer {
         vueGrille = VueControleur.getInstance(plateauTetris.getPlateau());
         plateauTetris.getPlateau().addObserver(vueGrille);
         border.setCenter(vueGrille);
+        border.setLeft(border_buttons);
         border.setRight(scoreValue);
-        Scene scene = new Scene(border,500,plateauTetris.getPlateau().getGrille().getLargeur()*vueGrille.getSize(), Color.BEIGE);
-
+        Scene scene = new Scene(border, 500, plateauTetris.getPlateau().getGrille().getLargeur() * vueGrille.getSize(), Color.BEIGE);
+        primaryStage.setResizable(false);
         //controleur
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

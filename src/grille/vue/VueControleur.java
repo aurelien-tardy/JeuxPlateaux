@@ -29,6 +29,11 @@ public class VueControleur extends GridPane implements Observer {
         initialize(plateau);
     }
 
+    public void setSize(int _size) {
+        this._size = _size;
+    }
+
+    
     @Override
     public void update(Observable o, Object arg) {
         // on vide la grille
