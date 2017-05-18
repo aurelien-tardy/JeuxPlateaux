@@ -59,7 +59,6 @@ public class Tetris extends Application implements Observer {
         //scoreValue.textProperty().bindBidirectional(plateauTetris.getScore(), new NumberStringConverter());
         bindScore(plateauTetris.getScore());
         BorderPane border = new BorderPane();
-        plateauTetris.getPlateau().setPiece(FormePiece.getPieceAleatoire());
         vueGrille = VueControleur.getInstance(plateauTetris.getPlateau());
         plateauTetris.getPlateau().addObserver(vueGrille);
         border.setCenter(vueGrille);

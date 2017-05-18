@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import puissance4.modele.Player;
 import puissance4.modele.plateauPuissance4;
 
 /**
@@ -29,9 +30,6 @@ public class Puissance4 extends Application {
     public void start(Stage primaryStage) throws Exception {
         plateauPuissance4 = new plateauPuissance4();
         BorderPane border = new BorderPane();
-        Case[][] cases = new Case[1][1];
-        cases[0][0] = new Case(Color.YELLOW);
-        plateauPuissance4.getPlateau().creerNouvellePiece(2, 0, cases);
         vueGrille = VueControleur.getInstance(plateauPuissance4.getPlateau());
         plateauPuissance4.getPlateau().addObserver(vueGrille);
         border.setCenter(vueGrille);
