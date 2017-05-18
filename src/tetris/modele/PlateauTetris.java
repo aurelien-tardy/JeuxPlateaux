@@ -8,6 +8,7 @@ package tetris.modele;
 import grille.modele.Case;
 import grille.modele.Grille;
 import grille.modele.Plateau;
+import grille.modele.Rotation;
 import grille.modele.Translation;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,6 +138,58 @@ public class PlateauTetris extends Observable implements Runnable {
                 Logger.getLogger(PlateauTetris.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    public void deplacerPiece(Translation translation) {
+        switch (translation) {
+            case Bas:
+                if (!plateau.deplacerPiece(Translation.Bas)) {
+                    plateau.placerPiece();
+                    while (detruireLigne() > 0);
+                    if (isGameOver()) {
+                        break;
+                    }
+                    plateau.creerNouvellePiece(FormePiece.getPieceAleatoire());
+                } else {
+                    addScore(2);
+                }
+                break;
+
+            case Droite:
+                plateau.deplacerPiece(Translation.Droite);
+                break;
+
+            case Gauche:
+                plateau.deplacerPiece(Translation.Gauche);
+                break;
+        }
+
+    }
+
+    public void tournerPiece(Rotation rotation) {
+        switch (rotation) {
+            case Droite:
+                plateau.tournerPiece(rotation);
+                break;
+            case Gauche:
+                plateau.tournerPiece(rotation);
+                break;
+
+        }
+
+    }
+
+    public void placerPiece() {
+        while (plateau.deplacerPiece(Translation.Bas)) {
+
+            plateau.placerPiece();
+            addScore(50);
+            while (detruireLigne() > 0);
+            if (isGameOver()) {
+                break;
+            }
+            plateau.creerNouvellePiece(FormePiece.getPieceAleatoire());
         }
     }
 }

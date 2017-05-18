@@ -61,12 +61,20 @@ public class Tetris extends Application implements Observer {
 
         //scoreValue.textProperty().bindBidirectional(plateauTetris.getScore(), new NumberStringConverter());
         bindScore(plateauTetris.getScore());
+
         BorderPane border = new BorderPane();
+
+        Pane root = new Pane();
+        ImageView background = new ImageView(new javafx.scene.image.Image("test.png", 400, 900, false, true));
+        root.getChildren().add(background);
+
         vueGrille = VueControleur.getInstance(plateauTetris.getPlateau());
         plateauTetris.getPlateau().addObserver(vueGrille);
+
         border.setCenter(vueGrille);
         border.setLeft(border_buttons);
         border.setRight(scoreValue);
+
         Scene scene = new Scene(border, 500, plateauTetris.getPlateau().getGrille().getLargeur() * vueGrille.getSize(), Color.BEIGE);
         primaryStage.setResizable(false);
         //controleur
@@ -76,47 +84,28 @@ public class Tetris extends Application implements Observer {
                 if (!PlateauTetris.GAMEOVER) {
                     switch (event.getCode()) {
                         case DOWN:
-                            if (!plateauTetris.getPlateau().deplacerPiece(Translation.Bas)) {
-                                plateauTetris.getPlateau().placerPiece();
-                                while (plateauTetris.detruireLigne() > 0);
-                                if (plateauTetris.isGameOver()) {
-                                    break;
-                                }
-                                plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
-                            } else {
-                                plateauTetris.addScore(2);
-                            }
+                            plateauTetris.deplacerPiece(Translation.Bas);
                             break;
 
                         case RIGHT:
-                            plateauTetris.getPlateau().deplacerPiece(Translation.Droite);
+                            plateauTetris.deplacerPiece(Translation.Droite);
                             break;
 
                         case LEFT:
-                            plateauTetris.getPlateau().deplacerPiece(Translation.Gauche);
+                            plateauTetris.deplacerPiece(Translation.Gauche);
                             break;
 
                         case ENTER:
-                            while (plateauTetris.getPlateau().deplacerPiece(Translation.Bas)) {
-                            }
-                            plateauTetris.getPlateau().placerPiece();
-                            plateauTetris.addScore(50);
-                            while (plateauTetris.detruireLigne() > 0);
-                            if (plateauTetris.isGameOver()) {
-                                break;
-                            }
-                            plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
+                            plateauTetris.placerPiece();
                             break;
 
                         case R:
                         case O:
-                            plateauTetris.getPlateau().tournerPiece(Rotation.Gauche);
+                            plateauTetris.tournerPiece(Rotation.Gauche);
                             break;
                     }
-                }else{
-                    Pane root = new Pane();
-                    ImageView background = new ImageView(new javafx.scene.image.Image("test.png", 400, 900, false, true));
-                    root.getChildren().add(background);
+                } else {
+
                     border.setCenter(root);
                     plateauTetris.restart();
                 }
