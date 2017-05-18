@@ -81,6 +81,12 @@ public class VueControleur extends GridPane implements Observer {
 
     }
 
+    public int getSize() {
+        return _size;
+    }
+    
+    
+
     public static VueControleur getInstance(Plateau plateau) {
         if (instance == null) {
             instance = new VueControleur(plateau);

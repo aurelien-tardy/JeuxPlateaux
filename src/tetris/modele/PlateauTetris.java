@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  *
@@ -24,11 +26,25 @@ public class PlateauTetris extends Observable implements Runnable {
     private int point;
     private Plateau plateau;
     public static Boolean GAMEOVER;
+    private final IntegerProperty score;
 
     public PlateauTetris() {
         GAMEOVER = false;
+        score = new SimpleIntegerProperty(0);
         plateau = new Plateau(30, 10);
         (new Thread(this)).start();
+    }
+
+    public IntegerProperty getScore() {
+        return score;
+    }
+
+    synchronized public void addScore(int s) {
+        score.set(score.get() + s);
+    }
+
+    public void RazScore() {
+        score.set(0);
     }
 
     public Plateau getPlateau() {
@@ -69,6 +85,7 @@ public class PlateauTetris extends Observable implements Runnable {
             }
         }
         nbLigne = lineNumber.size();
+        addScore(nbLigne * 100);
         for (int j = largeur - 1; j >= 0; j--) {
             if (lineNumber.size() > 0 && j == lineNumber.get(lineNumber.size() - 1)) {
                 j--;
@@ -98,6 +115,7 @@ public class PlateauTetris extends Observable implements Runnable {
         while (!PlateauTetris.GAMEOVER) {
             try {
                 Thread.sleep(1000);
+                addScore(10);
                 if (!plateau.deplacerPiece(Translation.Bas)) {
                     plateau.placerPiece();
                     while (detruireLigne() > 0);

@@ -16,12 +16,12 @@ import java.util.Observer;
 import javafx.beans.property.IntegerProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.effect.Reflection;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.converter.NumberStringConverter;
 import tetris.modele.PlateauTetris;
 
 /**
@@ -42,18 +42,20 @@ public class Tetris extends Application implements Observer {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        scoreValue = new Text("0");
-        scoreValue.setFont(new Font(50));
-        
         plateauTetris = new PlateauTetris();
+
+        scoreValue = new Text("test");
+        scoreValue.setFont(new Font(50));
+
+        //scoreValue.textProperty().bindBidirectional(plateauTetris.getScore(), new NumberStringConverter());
+        bindScore(plateauTetris.getScore());
         BorderPane border = new BorderPane();
         plateauTetris.getPlateau().setPiece(FormePiece.getPieceAleatoire());
         vueGrille = VueControleur.getInstance(plateauTetris.getPlateau());
         plateauTetris.getPlateau().addObserver(vueGrille);
         border.setCenter(vueGrille);
         border.setRight(scoreValue);
-        Scene scene = new Scene(border, Color.GREY);
+        Scene scene = new Scene(border,500,plateauTetris.getPlateau().getGrille().getLargeur()*vueGrille.getSize(), Color.BEIGE);
 
         //controleur
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -69,6 +71,8 @@ public class Tetris extends Application implements Observer {
                                     break;
                                 }
                                 plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
+                            } else {
+                                plateauTetris.addScore(10);
                             }
                             break;
 
@@ -106,10 +110,11 @@ public class Tetris extends Application implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+
     }
 
-    public void bindScore(int score) {
-        scoreValue.setText(Integer.toString(score));
+    public void bindScore(IntegerProperty score) {
+        scoreValue.textProperty().bind(score.asString());
     }
 
     /**
