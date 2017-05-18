@@ -7,6 +7,7 @@ package tetris.modele;
 
 import grille.modele.Case;
 import grille.modele.Piece;
+import java.util.Random;
 import javafx.scene.paint.Color;
 
 /**
@@ -17,7 +18,7 @@ public class FormePiece {
 
     public static Piece getPieceAleatoire() {
         Case[][] cases = null;
-        int randInt = (int) (Math.random() * 7);
+        int randInt = new Random().nextInt(7);
         switch (randInt) {
             // Brick I
             case 0:
@@ -39,10 +40,10 @@ public class FormePiece {
             // Brick T
             case 2:
                 cases = new Case[3][2];
-                cases[0][1] = new Case(Color.PURPLE);
+                cases[0][0] = new Case(Color.PURPLE);
                 cases[1][0] = new Case(Color.PURPLE);
-                cases[1][1] = new Case(Color.PURPLE);
                 cases[2][0] = new Case(Color.PURPLE);
+                cases[1][1] = new Case(Color.PURPLE);
                 break;
 
             // Brick S

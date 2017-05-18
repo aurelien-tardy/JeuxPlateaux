@@ -26,6 +26,8 @@ public class Plateau extends Observable {
 
     public void setGrille(Grille grille) {
         this.grille = grille;
+        setChanged();
+        notifyObservers();
     }
 
     public Piece getPiece() {
