@@ -32,6 +32,7 @@ public class PlateauTetris extends Observable implements Runnable {
         GAMEOVER = false;
         score = new SimpleIntegerProperty(0);
         plateau = new Plateau(20, 10);
+        plateau.setPiece(FormePiece.getPieceAleatoire());
         (new Thread(this)).start();
     }
 
