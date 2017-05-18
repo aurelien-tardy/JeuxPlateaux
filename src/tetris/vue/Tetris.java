@@ -12,14 +12,17 @@ import javafx.stage.Stage;
 import tetris.modele.FormePiece;
 import grille.modele.Rotation;
 import grille.vue.VueControleur;
+import java.awt.Image;
 import java.util.Observer;
 import javafx.beans.property.IntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -82,7 +85,7 @@ public class Tetris extends Application implements Observer {
                                 }
                                 plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
                             } else {
-                                plateauTetris.addScore(10);
+                                plateauTetris.addScore(2);
                             }
                             break;
 
@@ -98,6 +101,7 @@ public class Tetris extends Application implements Observer {
                             while (plateauTetris.getPlateau().deplacerPiece(Translation.Bas)) {
                             }
                             plateauTetris.getPlateau().placerPiece();
+                            plateauTetris.addScore(50);
                             while (plateauTetris.detruireLigne() > 0);
                             if (plateauTetris.isGameOver()) {
                                 break;
@@ -105,10 +109,17 @@ public class Tetris extends Application implements Observer {
                             plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
                             break;
 
+                        case R:
                         case O:
                             plateauTetris.getPlateau().tournerPiece(Rotation.Gauche);
                             break;
                     }
+                }else{
+                    Pane root = new Pane();
+                    ImageView background = new ImageView(new javafx.scene.image.Image("test.png", 400, 900, false, true));
+                    root.getChildren().add(background);
+                    border.setCenter(root);
+                    plateauTetris.restart();
                 }
             }
         });

@@ -66,7 +66,7 @@ public class PlateauTetris extends Observable implements Runnable {
     public void restart() {
         plateau.setPiece(FormePiece.getPieceAleatoire());
         plateau.setGrille(new Grille(plateau.getGrille().getLargeur(), plateau.getGrille().getHauteur()));
-        score.set(0);
+        RazScore();
         PlateauTetris.GAMEOVER = false;
     }
 
@@ -122,7 +122,7 @@ public class PlateauTetris extends Observable implements Runnable {
         while (!PlateauTetris.GAMEOVER) {
             try {
                 Thread.sleep(1000);
-                addScore(10);
+                addScore(1);
                 if (!plateau.deplacerPiece(Translation.Bas)) {
                     plateau.placerPiece();
                     while (detruireLigne() > 0);
