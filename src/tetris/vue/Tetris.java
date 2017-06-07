@@ -12,17 +12,14 @@ import javafx.stage.Stage;
 import tetris.modele.FormePiece;
 import grille.modele.Rotation;
 import grille.vue.VueControleur;
-import java.awt.Image;
 import java.util.Observer;
 import javafx.beans.property.IntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -50,7 +47,7 @@ public class Tetris extends Application implements Observer {
         scoreValue = new Text("0");
         scoreValue.setFont(new Font(50));
         BorderPane border_buttons = new BorderPane();
-        Button b_restart = new Button("Retart");
+        Button b_restart = new Button("Restart");
         b_restart.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -61,20 +58,12 @@ public class Tetris extends Application implements Observer {
 
         //scoreValue.textProperty().bindBidirectional(plateauTetris.getScore(), new NumberStringConverter());
         bindScore(plateauTetris.getScore());
-
         BorderPane border = new BorderPane();
-
-        Pane root = new Pane();
-        ImageView background = new ImageView(new javafx.scene.image.Image("test.png", 400, 900, false, true));
-        root.getChildren().add(background);
-
         vueGrille = VueControleur.getInstance(plateauTetris.getPlateau());
         plateauTetris.getPlateau().addObserver(vueGrille);
-
         border.setCenter(vueGrille);
         border.setLeft(border_buttons);
         border.setRight(scoreValue);
-
         Scene scene = new Scene(border, 500, plateauTetris.getPlateau().getGrille().getLargeur() * vueGrille.getSize(), Color.BEIGE);
         primaryStage.setResizable(false);
         //controleur
@@ -84,30 +73,40 @@ public class Tetris extends Application implements Observer {
                 if (!PlateauTetris.GAMEOVER) {
                     switch (event.getCode()) {
                         case DOWN:
-                            plateauTetris.deplacerPiece(Translation.Bas);
+                            if (!plateauTetris.getPlateau().deplacerPiece(Translation.Bas)) {
+                                plateauTetris.getPlateau().placerPiece();
+                                while (plateauTetris.detruireLigne() > 0);
+                                if (plateauTetris.isGameOver()) {
+                                    break;
+                                }
+                                plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
+                            } else {
+                                plateauTetris.addScore(10);
+                            }
                             break;
 
                         case RIGHT:
-                            plateauTetris.deplacerPiece(Translation.Droite);
+                            plateauTetris.getPlateau().deplacerPiece(Translation.Droite);
                             break;
 
                         case LEFT:
-                            plateauTetris.deplacerPiece(Translation.Gauche);
+                            plateauTetris.getPlateau().deplacerPiece(Translation.Gauche);
                             break;
 
                         case ENTER:
-                            plateauTetris.placerPiece();
+                            while (plateauTetris.getPlateau().deplacerPiece(Translation.Bas));
+                            plateauTetris.getPlateau().placerPiece();
+                            while (plateauTetris.detruireLigne() > 0);
+                            if (plateauTetris.isGameOver()) {
+                                break;
+                            }
+                            plateauTetris.getPlateau().creerNouvellePiece(FormePiece.getPieceAleatoire());
                             break;
 
-                        case R:
                         case O:
-                            plateauTetris.tournerPiece(Rotation.Gauche);
+                            plateauTetris.getPlateau().tournerPiece(Rotation.Gauche);
                             break;
                     }
-                } else {
-
-                    border.setCenter(root);
-                    plateauTetris.restart();
                 }
             }
         });

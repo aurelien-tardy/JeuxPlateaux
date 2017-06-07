@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
  *
  * @author Epulapp
  */
-public class plateauPuissance4 {
+public class PlateauPuissance4 {
 
     private Plateau plateau;
     public static Boolean GAMEOVER;
@@ -21,15 +21,13 @@ public class plateauPuissance4 {
     private Player player1;
     private Player player2;
 
-    public plateauPuissance4() {
+    public PlateauPuissance4() {
         GAMEOVER = false;
         plateau = new Plateau(7, 7);
         player1 = new Player(Color.RED);
         player2 = new Player(Color.YELLOW);
         currentPlayer = player1;
-        Case[][] cases = new Case[1][1];
-        cases[0][0] = new Case(currentPlayer.getColor());
-        plateau.creerNouvellePiece(2, 0, cases);
+        genererPiece();
     }
 
     public Plateau getPlateau() {
@@ -38,14 +36,6 @@ public class plateauPuissance4 {
 
     public void setPlateau(Plateau plateau) {
         this.plateau = plateau;
-    }
-
-    public static Boolean getGAMEOVER() {
-        return GAMEOVER;
-    }
-
-    public static void setGAMEOVER(Boolean GAMEOVER) {
-        plateauPuissance4.GAMEOVER = GAMEOVER;
     }
 
     public Boolean cherche4() {
@@ -83,23 +73,23 @@ public class plateauPuissance4 {
     }
 
     private Boolean cherche4alignes(int oCol, int oLigne, int dCol, int dLigne) {
-        int couleur = 0;
         int compteur = 0;
-
+        Color couleur = null;
         int curCol = oCol;
         int curRow = oLigne;
 
         while ((curCol >= 0) && (curCol < plateau.getGrille().getHauteur()) && (curRow >= 1) && (curRow < plateau.getGrille().getLargeur())) {
-            if (plateau.getGrille().getCases()[curCol][curRow].getColor() != currentPlayer.getColor()) {
+            if (plateau.getGrille().getCases()[curCol][curRow] != null && plateau.getGrille().getCases()[curCol][curRow].getColor() != couleur) {
                 // Si la couleur change, on réinitialise le compteur
+                couleur = plateau.getGrille().getCases()[curCol][curRow].getColor();
                 compteur = 1;
-            } else {
+            } else if (plateau.getGrille().getCases()[curCol][curRow] != null){
                 // Sinon on l'incrémente
                 compteur++;
             }
 
             // On sort lorsque le compteur atteint 4
-            if ((couleur != 0) && (compteur == 4)) {
+            if (couleur != null && compteur == 4) {
                 return true;
             }
 
@@ -110,5 +100,55 @@ public class plateauPuissance4 {
 
         // Aucun alignement n'a été trouvé
         return false;
+    }
+
+    public Boolean win() {
+        Boolean win = false;
+        Boolean full = true;
+
+        //La grille est pleine
+        for (int x = 1; x < plateau.getGrille().getHauteur(); x++) {
+            for (int y = 1; y < plateau.getGrille().getLargeur(); y++) {
+                if (plateau.getGrille().getCases()[x][y] == null) {
+                    full = false;
+                    break;
+                }
+            }
+        }
+        //Si le joueur gagne
+        win = cherche4();
+
+        if (full || win) {
+            if (!full) {
+                currentPlayer.setScore(currentPlayer.getScore() + 1);
+                PlateauPuissance4.GAMEOVER = true;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void changeCurrentPlayer() {
+        if (currentPlayer == player1) {
+            currentPlayer = player2;
+        } else {
+            currentPlayer = player1;
+        }
+    }
+
+    public Boolean placer() {
+        Boolean res = false;
+        if (plateau.getPiece().getPosY() > 0) {
+            res = plateau.placerPiece();
+            changeCurrentPlayer();
+            genererPiece();
+        }
+        return res;
+    }
+
+    public void genererPiece() {
+        Case[][] cases = new Case[1][1];
+        cases[0][0] = new Case(currentPlayer.getColor());
+        plateau.creerNouvellePiece(3, 0, cases);
     }
 }

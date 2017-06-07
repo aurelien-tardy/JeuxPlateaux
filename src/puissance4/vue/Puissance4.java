@@ -5,7 +5,8 @@
  */
 package puissance4.vue;
 
-import grille.modele.Case;
+import grille.modele.Piece;
+import grille.modele.Translation;
 import grille.vue.VueControleur;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -14,8 +15,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import puissance4.modele.Player;
-import puissance4.modele.plateauPuissance4;
+import puissance4.modele.PlateauPuissance4;
+import tetris.modele.FormePiece;
 
 /**
  *
@@ -23,35 +24,51 @@ import puissance4.modele.plateauPuissance4;
  */
 public class Puissance4 extends Application {
 
-    private plateauPuissance4 plateauPuissance4;
+    private PlateauPuissance4 plateauPuissance4;
     private static VueControleur vueGrille;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        plateauPuissance4 = new plateauPuissance4();
+        plateauPuissance4 = new PlateauPuissance4();
         BorderPane border = new BorderPane();
         vueGrille = VueControleur.getInstance(plateauPuissance4.getPlateau());
         plateauPuissance4.getPlateau().addObserver(vueGrille);
         border.setCenter(vueGrille);
-        Scene scene = new Scene(border, 500, plateauPuissance4.getPlateau().getGrille().getLargeur() * vueGrille.getSize(), Color.BEIGE);
+        Scene scene = new Scene(border, plateauPuissance4.getPlateau().getGrille().getHauteur() * vueGrille.getSize(), plateauPuissance4.getPlateau().getGrille().getLargeur() * vueGrille.getSize(), Color.BEIGE);
         primaryStage.setResizable(false);
 
         //controleur
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case DOWN:
-                        break;
+                if (!PlateauPuissance4.GAMEOVER) {
+                    switch (event.getCode()) {
+                        case DOWN:
+                            while (plateauPuissance4.getPlateau().deplacerPiece(Translation.Bas));
+                            if (plateauPuissance4.placer()) {
+                                if (plateauPuissance4.win()) {
+                                    break;
+                                }
+                            }
+                            break;
 
-                    case RIGHT:
-                        break;
+                        case RIGHT:
+                            plateauPuissance4.getPlateau().deplacerPiece(Translation.Droite);
+                            break;
 
-                    case LEFT:
-                        break;
+                        case LEFT:
+                            plateauPuissance4.getPlateau().deplacerPiece(Translation.Gauche);
+                            break;
 
-                    case ENTER:
-                        break;
+                        case ENTER:
+                            while (plateauPuissance4.getPlateau().deplacerPiece(Translation.Bas));
+                            if (plateauPuissance4.placer()) {
+                                if (plateauPuissance4.win()) {
+                                    break;
+                                }
+                            }
+                            break;
+                    }
                 }
             }
         });
